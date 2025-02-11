@@ -57,6 +57,19 @@
                 <requireMavenVersion>
                   <version>[3.9.9,)</version>
                 </requireMavenVersion>
+                <requireJavaVersion>
+                  <version>[21,)</version>
+                </requireJavaVersion>
+                <requirePluginVersions>
+                  <message>Best Practice is to always define plugin versions!</message>
+                  <banLatest>true</banLatest>
+                  <banRelease>true</banRelease>
+                  <banSnapshots>true</banSnapshots>
+                  <phases>clean,deploy,site</phases>
+                </requirePluginVersions>
+                <requireReleaseDeps>
+                  <message>No Snapshots Dependencies Allowed!</message>
+                </requireReleaseDeps>
               </rules>
             </configuration>
           </execution>
