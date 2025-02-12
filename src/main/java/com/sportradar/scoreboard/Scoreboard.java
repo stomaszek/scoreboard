@@ -6,8 +6,8 @@ import com.sportradar.scoreboard.domian.Team;
 import java.util.Iterator;
 
 public interface Scoreboard {
-    public void startGame(Team homeTeam, Team awayTeam);
-    public void finishGame(Team homeTeam, Team awayTeam);
-    public void updateScore(Score score);
-    public Iterator<Score> getCurrentScoreBoard();
+  void startGame(Team homeTeam, Team awayTeam);
+  void finishGame(Team homeTeam, Team awayTeam);
+  void updateScore(Score score);
+  Iterator<Score> getCurrentScoreBoard();
 }
