@@ -47,6 +47,7 @@ public class Score {
     }
 
     private void verifyGoals(int homeTeamGoals, int awayTeamGoals) {
+        //TODO: check if upper limit of goals makes sense
         if ((homeTeamGoals < 0) || (awayTeamGoals < 0)) {
             throw new IllegalArgumentException(String.format("%d:%d is not a valid result", homeTeamGoals, awayTeamGoals));
         }
