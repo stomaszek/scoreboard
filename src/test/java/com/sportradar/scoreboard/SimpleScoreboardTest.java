@@ -73,6 +73,13 @@ class SimpleScoreboardTest {
 
     @Test
     @Disabled
+    void checkStartMatchAlreadyStarted() {
+        sb.startGame(mexico, italy);
+        assertThrows(ScoreboardException.class, () -> sb.startGame(mexico, italy));
+    }
+
+    @Test
+    @Disabled
     void checkUpdateScore() {
         sb.startGame(mexico, italy);
         sb.updateScore(new Score(mexico, italy, 3, 2));
