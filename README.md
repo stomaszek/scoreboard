@@ -4,6 +4,7 @@
 - project defined and build managed using maven
 - no javadoc comments added 
 - additional libraries reduced to minimum - just java used
+- validation and wrong usage reported by exceptions with detailed info in messages
 
 ## Non-technical assumptions  
 - teams identified by name - uniques of team name assumed

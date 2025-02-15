@@ -1,9 +1,9 @@
 package com.sportradar.scoreboard.domian;
 
-import static com.sportradar.scoreboard.util.StringUtils.isNotEmptyAlphabetic;
+import com.sportradar.scoreboard.util.TeamNameValidator;
 
 public class Team {
-  String name;
+  private final String name;
 
   public Team(String name) {
     validateName(name);
@@ -32,9 +32,8 @@ public class Team {
   }
 
   private void validateName(String name) {
-    if(!isNotEmptyAlphabetic(name)) {
-      throw new IllegalArgumentException("nor valid team name (use non-empty alphabetic)");
+    if (!TeamNameValidator.isValidTeamName(name)) {
+      throw new IllegalArgumentException(String.format("%s is not valid team name", name));
     }
   }
-
 }

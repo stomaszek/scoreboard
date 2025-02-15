@@ -1,195 +1,191 @@
 package com.sportradar.scoreboard;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import com.sportradar.scoreboard.domian.Score;
 import com.sportradar.scoreboard.domian.Team;
 import com.sportradar.scoreboard.exception.ScoreboardException;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 class SimpleScoreboardTest {
-    Team mexico = new Team("Mexico");
-    Team canada = new Team("Canada");
-    Team spain = new Team("Spain");
-    Team brazil = new Team("Brazil");
-    Team germany = new Team("Germany");
-    Team france = new Team("France");
-    Team uruguay = new Team("Uruguay");
-    Team italy = new Team("Italy");
-    Team argentina = new Team("Argentina");
-    Team australia = new Team("Australia");
+  final Team mexico = new Team("Mexico");
+  final Team canada = new Team("Canada");
+  final Team spain = new Team("Spain");
+  final Team brazil = new Team("Brazil");
+  final Team germany = new Team("Germany");
+  final Team france = new Team("France");
+  final Team uruguay = new Team("Uruguay");
+  final Team italy = new Team("Italy");
+  final Team argentina = new Team("Argentina");
+  final Team australia = new Team("Australia");
 
-    Scoreboard sb;
+  Scoreboard sb;
 
-    @BeforeEach
-    void initScoreboard() {
-        sb = new SimpleScoreboard();
-    }
+  @BeforeEach
+  void initScoreboard() {
+    sb = new SimpleScoreboard();
+  }
 
-    @Test
-    void checkScoreboardInitialization() {
-        Score[] s = sb.getCurrentScoreBoard();
+  @Test
+  void checkScoreboardInitialization() {
+    Score[] s = sb.getCurrentScoreBoard();
 
-        assertEquals(0, s.length);
-    }
+    assertEquals(0, s.length);
+  }
 
-    @Test
-    @Disabled
-    void checkStartMatchUsingTheSameTeam() {
-        assertThrows(ScoreboardException.class, () -> sb.startGame(mexico, mexico));
-    }
+  @Test
+  void checkStartMatchUsingTheSameTeam() {
+    assertThrows(ScoreboardException.class, () -> sb.startGame(mexico, mexico));
+  }
 
-    @Test
-    @Disabled
-    void checkUpdateScoreForNotStartedMatch() {
-        assertThrows(ScoreboardException.class, () -> sb.updateScore(new Score(mexico, italy, 3, 2)));
-    }
+  @Test
+  void checkUpdateScoreForNotStartedMatch() {
+    assertThrows(ScoreboardException.class, () -> sb.updateScore(new Score(mexico, italy, 3, 2)));
+  }
 
-    @Test
-    @Disabled
-    void checkStartMatchByTeamAlreadyPlaying() {
-        sb.startGame(mexico, italy);
+  @Test
+  void checkStartMatchByTeamAlreadyPlaying() {
+    sb.startGame(mexico, italy);
 
-        assertThrows(ScoreboardException.class, () -> sb.startGame(mexico, spain));
-    }
+    assertThrows(ScoreboardException.class, () -> sb.startGame(mexico, spain));
+    assertThrows(ScoreboardException.class, () -> sb.startGame(spain, italy));
+  }
 
-    @Test
-    @Disabled
-    void checkStartMatch() {
-        sb.startGame(mexico, italy);
+  @Test
+  void checkStartMatch() {
+    sb.startGame(mexico, italy);
 
-        Score[] s = sb.getCurrentScoreBoard();
+    Score[] s = sb.getCurrentScoreBoard();
 
-        assertEquals(1, s.length);
+    assertEquals(1, s.length);
 
-        assertEquals(mexico, s[0].getHomeTeam());
-        assertEquals(italy, s[0].getAwayTeam());
-        assertEquals(0, s[0].getHomeTeamGoals());
-        assertEquals(0, s[0].getAwayTeamGoals());
-    }
+    assertEquals(mexico, s[0].getHomeTeam());
+    assertEquals(italy, s[0].getAwayTeam());
+    assertEquals(0, s[0].getHomeTeamGoals());
+    assertEquals(0, s[0].getAwayTeamGoals());
+  }
 
-    @Test
-    @Disabled
-    void checkStartMatchAlreadyStarted() {
-        sb.startGame(mexico, italy);
-        assertThrows(ScoreboardException.class, () -> sb.startGame(mexico, italy));
-    }
+  @Test
+  void checkStartMatchAlreadyStarted() {
+    sb.startGame(mexico, italy);
+    assertThrows(ScoreboardException.class, () -> sb.startGame(mexico, italy));
+  }
 
-    @Test
-    @Disabled
-    void checkUpdateScore() {
-        sb.startGame(mexico, italy);
-        sb.updateScore(new Score(mexico, italy, 3, 2));
+  @Test
+  void checkUpdateScore() {
+    sb.startGame(mexico, italy);
+    sb.updateScore(new Score(mexico, italy, 3, 2));
 
-        Score[] s = sb.getCurrentScoreBoard();
+    Score[] s = sb.getCurrentScoreBoard();
 
-        assertEquals(1, s.length);
-        assertEquals(mexico, s[0].getHomeTeam());
-        assertEquals(italy, s[0].getAwayTeam());
-        assertEquals(3, s[0].getHomeTeamGoals());
-        assertEquals(2, s[0].getAwayTeamGoals());
-    }
+    assertEquals(1, s.length);
+    assertEquals(mexico, s[0].getHomeTeam());
+    assertEquals(italy, s[0].getAwayTeam());
+    assertEquals(3, s[0].getHomeTeamGoals());
+    assertEquals(2, s[0].getAwayTeamGoals());
+  }
 
-    @Test
-    @Disabled
-    void checkUpdateScoreScoreSeveralTimes() {
-        sb.startGame(mexico, italy);
-        sb.updateScore(new Score(mexico, italy, 0, 0));
-        sb.updateScore(new Score(mexico, italy, 1, 2));
-        sb.updateScore(new Score(mexico, italy, 3, 2));
+  @Test
+  void checkUpdateScoreScoreSeveralTimes() {
+    sb.startGame(mexico, italy);
+    sb.updateScore(new Score(mexico, italy, 0, 0));
+    sb.updateScore(new Score(mexico, italy, 1, 2));
+    sb.updateScore(new Score(mexico, italy, 3, 2));
 
-        Score[] s = sb.getCurrentScoreBoard();
+    Score[] s = sb.getCurrentScoreBoard();
 
-        assertEquals(1, s.length);
+    assertEquals(1, s.length);
 
-        assertEquals(mexico, s[0].getHomeTeam());
-        assertEquals(italy, s[0].getAwayTeam());
-        assertEquals(3, s[0].getHomeTeamGoals());
-        assertEquals(2, s[0].getAwayTeamGoals());
-    }
+    assertEquals(mexico, s[0].getHomeTeam());
+    assertEquals(italy, s[0].getAwayTeam());
+    assertEquals(3, s[0].getHomeTeamGoals());
+    assertEquals(2, s[0].getAwayTeamGoals());
+  }
 
-    @Test
-    @Disabled
-    void checkFinishGameForNotStartedOne() {
-        assertThrows(ScoreboardException.class, () -> sb.finishGame(mexico, spain));
-    }
+  @Test
+  void checkFinishGameForNotStartedOne() {
+    assertThrows(ScoreboardException.class, () -> sb.finishGame(mexico, spain));
+  }
 
-    @Test
-    void checkFinishGameForOnlyOne() {
-        sb.startGame(mexico, spain);
-        sb.finishGame(mexico, spain);
+  @Test
+  void checkFinishGameUsingTheSameTeam() {
+    assertThrows(ScoreboardException.class, () -> sb.finishGame(mexico, mexico));
+  }
 
-        Score[] s = sb.getCurrentScoreBoard();
+  @Test
+  void checkFinishGameForOnlyOne() {
+    sb.startGame(mexico, spain);
+    sb.finishGame(mexico, spain);
 
-        assertEquals(0, s.length);
-    }
+    Score[] s = sb.getCurrentScoreBoard();
 
-    @Test
-    @Disabled
-    void checkFinishGame() {
-        sb.startGame(mexico, spain);
-        sb.startGame(france, germany);
-        sb.finishGame(france, germany);
+    assertEquals(0, s.length);
+  }
 
-        Score[] s = sb.getCurrentScoreBoard();
+  @Test
+  void checkFinishGame() throws Exception {
+    sb.startGame(france, germany);
+    Thread.sleep(2);
+    sb.startGame(mexico, spain);
+    Thread.sleep(2);
+    sb.finishGame(france, germany);
 
-        assertEquals(1, s.length);
-        assertEquals(mexico, s[0].getHomeTeam());
-        assertEquals(spain, s[0].getAwayTeam());
-        assertEquals(0, s[0].getHomeTeamGoals());
-        assertEquals(0, s[0].getAwayTeamGoals());
-    }
+    Score[] s = sb.getCurrentScoreBoard();
 
-    @Test
-    @Disabled
-    //scenario specified by client
-    void checkClientScenario() {
-        //given
-        sb.startGame(mexico, canada);
-        sb.startGame(spain, brazil);
-        sb.startGame(germany, france);
-        sb.startGame(uruguay, italy);
-        sb.startGame(argentina, australia);
+    assertEquals(1, s.length);
+    assertEquals(mexico, s[0].getHomeTeam());
+    assertEquals(spain, s[0].getAwayTeam());
+    assertEquals(0, s[0].getHomeTeamGoals());
+    assertEquals(0, s[0].getAwayTeamGoals());
+  }
 
-        sb.updateScore(new Score(mexico, canada,0,5));
-        sb.updateScore(new Score(spain, brazil, 10, 2));
-        sb.updateScore(new Score(germany, france, 2, 2));
-        sb.updateScore(new Score(uruguay, italy, 6, 6));
-        sb.updateScore(new Score(argentina, australia, 3,2));
+  @Test
+  // scenario specified by client
+  void checkClientScenario() throws InterruptedException {
+    // given
+    sb.startGame(mexico, canada);
+    sb.startGame(spain, brazil);
+    sb.startGame(germany, france);
+    sb.startGame(uruguay, italy);
+    sb.startGame(argentina, australia);
 
-        //when
-        Score[] s = sb.getCurrentScoreBoard();
+    sb.updateScore(new Score(mexico, canada, 0, 5));
+    sb.updateScore(new Score(spain, brazil, 10, 2));
+    sb.updateScore(new Score(germany, france, 2, 2));
+    sb.updateScore(new Score(uruguay, italy, 6, 6));
+    sb.updateScore(new Score(argentina, australia, 3, 1));
 
-        //then
-        assertEquals(5, s.length);
+    // when
+    Score[] s = sb.getCurrentScoreBoard();
 
-        assertEquals(uruguay, s[0].getHomeTeam());
-        assertEquals(italy, s[0].getAwayTeam());
-        assertEquals(6, s[0].getHomeTeamGoals());
-        assertEquals(6, s[0].getAwayTeamGoals());
+    // then
+    assertEquals(5, s.length);
 
-        assertEquals(spain, s[0].getHomeTeam());
-        assertEquals(brazil, s[0].getAwayTeam());
-        assertEquals(10, s[0].getHomeTeamGoals());
-        assertEquals(2, s[0].getAwayTeamGoals());
+    assertEquals(uruguay, s[0].getHomeTeam());
+    assertEquals(italy, s[0].getAwayTeam());
+    assertEquals(6, s[0].getHomeTeamGoals());
+    assertEquals(6, s[0].getAwayTeamGoals());
 
-        assertEquals(mexico, s[0].getHomeTeam());
-        assertEquals(canada, s[0].getAwayTeam());
-        assertEquals(0, s[0].getHomeTeamGoals());
-        assertEquals(5, s[0].getAwayTeamGoals());
+    assertEquals(spain, s[1].getHomeTeam());
+    assertEquals(brazil, s[1].getAwayTeam());
+    assertEquals(10, s[1].getHomeTeamGoals());
+    assertEquals(2, s[1].getAwayTeamGoals());
 
-        assertEquals(argentina, s[0].getHomeTeam());
-        assertEquals(australia, s[0].getAwayTeam());
-        assertEquals(3, s[0].getHomeTeamGoals());
-        assertEquals(1, s[0].getAwayTeamGoals());
+    assertEquals(mexico, s[2].getHomeTeam());
+    assertEquals(canada, s[2].getAwayTeam());
+    assertEquals(0, s[2].getHomeTeamGoals());
+    assertEquals(5, s[2].getAwayTeamGoals());
 
-        assertEquals(germany, s[0].getHomeTeam());
-        assertEquals(france, s[0].getAwayTeam());
-        assertEquals(2, s[0].getHomeTeamGoals());
-        assertEquals(2, s[0].getAwayTeamGoals());
-    }
+    assertEquals(argentina, s[3].getHomeTeam());
+    assertEquals(australia, s[3].getAwayTeam());
+    assertEquals(3, s[3].getHomeTeamGoals());
+    assertEquals(1, s[3].getAwayTeamGoals());
 
+    assertEquals(germany, s[4].getHomeTeam());
+    assertEquals(france, s[4].getAwayTeam());
+    assertEquals(2, s[4].getHomeTeamGoals());
+    assertEquals(2, s[4].getAwayTeamGoals());
+  }
 }

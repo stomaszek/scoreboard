@@ -1,9 +1,9 @@
 package com.sportradar.scoreboard.util;
 
-public class StringUtils {
+class StringUtils {
 
   public static boolean isNotEmptyAlphabetic(String s) {
-      return !isNullOrEmpty(s) && isAlphabetic(s);
+    return !isNullOrEmpty(s) && isAlphabetic(s);
   }
 
   private static boolean isNullOrEmpty(String s) {
