@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 class TeamTest {
-  Team poland = new Team("Poland");
-  Team holland = new Team("Holland");
+  final Team poland = new Team("Poland");
+  final Team holland = new Team("Holland");
 
   @Test
   void checkIfTheSameNameIdentifiesTheSameTeam() {

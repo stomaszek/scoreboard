@@ -143,7 +143,7 @@ class SimpleScoreboardTest {
 
   @Test
   // scenario specified by client
-  void checkClientScenario() throws InterruptedException {
+  void checkClientScenario() {
     // given
     sb.startGame(mexico, canada);
     sb.startGame(spain, brazil);

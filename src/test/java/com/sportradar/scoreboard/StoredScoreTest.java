@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sportradar.scoreboard.domian.Score;
 import com.sportradar.scoreboard.domian.Team;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class StoredScoreTest {
@@ -13,9 +12,6 @@ class StoredScoreTest {
   final Team holland = new Team("Holland");
   final StoredScore polandHolland1 = new StoredScore(new Score(poland, holland));
   final StoredScore polandHolland2 = new StoredScore(new Score(poland, holland, 3, 5));
-
-  @BeforeEach
-  void setUp() {}
 
   @Test
   void compareToDifferentNoOfGoals() {

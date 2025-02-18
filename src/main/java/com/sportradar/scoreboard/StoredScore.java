@@ -3,7 +3,7 @@ package com.sportradar.scoreboard;
 import com.sportradar.scoreboard.domian.Score;
 
 class StoredScore extends Score implements Comparable<StoredScore> {
-  long timestamp;
+  final long timestamp;
 
   public StoredScore(Score score) {
     super(

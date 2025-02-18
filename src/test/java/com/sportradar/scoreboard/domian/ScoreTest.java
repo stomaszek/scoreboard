@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ScoreTest {
-  Team poland = new Team("Poland");
-  Team holland = new Team("Holland");
+  final Team poland = new Team("Poland");
+  final Team holland = new Team("Holland");
 
   @Test
   void checkDefaultScore() {
