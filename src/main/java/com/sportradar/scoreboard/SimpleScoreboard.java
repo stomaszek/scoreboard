@@ -27,7 +27,7 @@ public class SimpleScoreboard implements Scoreboard {
       throw new ScoreboardException(String.format("%s is already playing", awayTeam.getName()));
     }
 
-    store.add(new StoredScore(new Score(homeTeam, awayTeam)));
+    store.addOrUpdate(new StoredScore(new Score(homeTeam, awayTeam)));
   }
 
   @Override
@@ -50,7 +50,7 @@ public class SimpleScoreboard implements Scoreboard {
   @Override
   public void updateScore(Score score) {
     if (store.isStored(score)) {
-      store.update(score);
+      store.addOrUpdate(score);
     } else {
       throw new ScoreboardException(
           String.format(

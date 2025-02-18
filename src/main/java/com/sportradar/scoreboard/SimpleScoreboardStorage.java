@@ -32,7 +32,7 @@ class SimpleScoreboardStorage implements ScoreboardStorage {
   }
 
   @Override
-  public void add(Score score) {
+  public void addOrUpdate(Score score) {
     StoredScore ss = new StoredScore(score);
 
     if (isStored(ss)) {
@@ -45,17 +45,6 @@ class SimpleScoreboardStorage implements ScoreboardStorage {
   @Override
   public void remove(Score score) {
     removeFromScores(score);
-  }
-
-  @Override
-  public void update(Score score) {
-    StoredScore ss = new StoredScore(score);
-
-    if (isStored(ss)) {
-      removeFromScores(score);
-    }
-
-    scores.add(ss);
   }
 
   @Override

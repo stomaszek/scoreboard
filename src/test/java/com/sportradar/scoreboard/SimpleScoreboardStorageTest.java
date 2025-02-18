@@ -34,21 +34,21 @@ public class SimpleScoreboardStorageTest {
 
   @Test
   void checkIfAddedScoreIsStored() {
-    storage.add(polandHolland1);
+    storage.addOrUpdate(polandHolland1);
 
     assertTrue(storage.isStored(polandHolland1));
   }
 
   @Test
   void checkIfAddedTwiceScoreIsStored() {
-    storage.add(polandHolland1);
+    storage.addOrUpdate(polandHolland1);
 
     assertTrue(storage.isStored(polandHolland2));
   }
 
   @Test
   void checkIfAddedAndRemovedIsNotStored() {
-    storage.add(polandHolland1);
+    storage.addOrUpdate(polandHolland1);
     storage.remove(polandHolland2);
 
     assertFalse(storage.isStored(polandHolland1));
@@ -57,7 +57,7 @@ public class SimpleScoreboardStorageTest {
 
   @Test
   void checkAddSingleScore() {
-    storage.add(polandHolland1);
+    storage.addOrUpdate(polandHolland1);
 
     Score[] s = storage.getAllScoresSorted();
 
@@ -70,11 +70,11 @@ public class SimpleScoreboardStorageTest {
 
   @Test
   void checkAddScoresForTheSameMatch() {
-    storage.add(polandHolland1);
-    storage.add(polandHolland2);
-    storage.add(polandHolland1);
-    storage.add(polandHolland1);
-    storage.add(polandHolland2);
+    storage.addOrUpdate(polandHolland1);
+    storage.addOrUpdate(polandHolland2);
+    storage.addOrUpdate(polandHolland1);
+    storage.addOrUpdate(polandHolland1);
+    storage.addOrUpdate(polandHolland2);
 
     Score[] s = storage.getAllScoresSorted();
 
@@ -87,9 +87,9 @@ public class SimpleScoreboardStorageTest {
 
   @Test
   void checkAddMultipleScores() {
-    storage.add(polandHolland1);
-    storage.add(polandHolland2);
-    storage.add(franceItaly);
+    storage.addOrUpdate(polandHolland1);
+    storage.addOrUpdate(polandHolland2);
+    storage.addOrUpdate(franceItaly);
 
     Score[] s = storage.getAllScoresSorted();
 
@@ -105,10 +105,6 @@ public class SimpleScoreboardStorageTest {
     assertEquals(5, s[1].getAwayTeamGoals());
   }
 
-  public Team getFrance() {
-    return france;
-  }
-
   @Test
   void isPlayingEmpty() {
     assertFalse(storage.isPlaying(poland));
@@ -116,14 +112,14 @@ public class SimpleScoreboardStorageTest {
 
   @Test
   void isPlayingNonEmpty() {
-    storage.add(polandHolland1);
+    storage.addOrUpdate(polandHolland1);
 
     assertTrue(storage.isPlaying(poland));
   }
 
   @Test
   void isPlayingNonEmptyFalse() {
-    storage.add(polandHolland1);
+    storage.addOrUpdate(polandHolland1);
 
     assertFalse(storage.isPlaying(france));
   }

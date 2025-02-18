@@ -8,11 +8,9 @@ interface ScoreboardStorage {
 
   boolean isPlaying(Team team);
 
-  void add(Score score);
+  void addOrUpdate(Score score);
 
   void remove(Score score);
-
-  void update(Score score);
 
   Score[] getAllScoresSorted();
 }
